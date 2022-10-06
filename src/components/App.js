@@ -3,14 +3,44 @@ import location from './assets/icons/location.svg';
 import shower from './assets/Shower.png';
 import pin from './assets/icons/pin.svg';
 import navigation from './assets/icons/navigation.svg';
+import close from './assets/icons/close.svg';
+import search from './assets/icons/search.svg';
+import chevron from './assets/icons/chevron.svg';
+
+import { useState } from 'react';
+import classNames from 'classnames';
+import axios from 'axios';
 
 function App() {
+  const [modalOpen, setModalOpen] = useState(false);
+  const [input, setInput] = useState('');
+  const [weatherOfCity, setWeatherOfCity] = useState();
+
+  const fetchWeather = async (city) => {
+    const { data } = await axios.get(
+      `https://api.openweathermap.org/data/2.5/forecast?q=${city}&cnt=48&appid=${process.env.REACT_APP_API_KEY}`,
+    );
+
+    setWeatherOfCity(data);
+  };
+
+  const clickModalWindow = () => {
+    setModalOpen(!modalOpen);
+  };
+
+  const onSubmit = (event) => {
+    event.preventDefault();
+    fetchWeather(input)
+
+    console.log(weatherOfCity);
+  };
+
   const styleOfLine = {
     position: 'absolute',
     width: '50%',
     height: '8px',
-    'background-color': '#FFEC65',
-    'border-radius': '80px',
+    backgroundColor: '#FFEC65',
+    borderRadius: '80px',
   };
 
   return (
@@ -21,7 +51,9 @@ function App() {
             <img src={cloudy} alt="" className="left-side__bc" />
 
             <div className="left-side__top">
-              <button className="left-side__rectangular-button">Seach for places</button>
+              <button className="left-side__rectangular-button" onClick={clickModalWindow}>
+                Seach for places
+              </button>
               <button className="left-side__round-button">
                 <img src={location} alt="" className="left-side__location" />
               </button>
@@ -47,6 +79,42 @@ function App() {
           </div>
         </div>
       </div>
+
+      <div className={classNames('modal-window', { 'modal-window--open': modalOpen })}>
+        <div className="wrapper">
+          <div className="modal-window__content">
+            <img src={close} alt="" className="modal-window__close" onClick={clickModalWindow} />
+
+            <form onSubmit={onSubmit} className="modal-window__form">
+              <img src={search} alt="" className="modal-window__search" />
+              <input
+                type="text"
+                className="modal-window__input"
+                placeholder="search location"
+                value={input}
+                onChange={(event) => setInput(event.target.value)}
+              />
+              <button type="submit" className="modal-window__button">
+                Search
+              </button>
+            </form>
+
+            <div className="modal-window__city">
+              London
+              <img src={chevron} alt="" className="modal-window__chevron" />
+            </div>
+            <div className="modal-window__city">
+              London
+              <img src={chevron} alt="" className="modal-window__chevron" />
+            </div>
+            <div className="modal-window__city">
+              London
+              <img src={chevron} alt="" className="modal-window__chevron" />
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div className="right-side">
         <div className="wrapper wrapper--right-side">
           <div className="right-side__content">

@@ -166,6 +166,129 @@ code {
   }
 }
 
+.modal-window {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  max-width: 450px;
+  width: 100%;
+  background-color: $mediumBlue;
+
+  transform: translateX(-100%);
+  transition: transform 0.5s;
+
+  &--open {
+    transform: translateX(0%);
+    transition: transform 0.5s;
+  }
+
+  &__content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  &__close {
+    align-self: flex-end;
+    width: 30px;
+    margin-bottom: 45px;
+
+    filter: invert(100%) sepia(2%) saturate(6401%) hue-rotate(106deg) brightness(103%) contrast(79%);
+
+    cursor: pointer;
+  }
+
+  &__form {
+    position: relative;
+    display: flex;
+    column-gap: 12px;
+    margin-bottom: 38px;
+  }
+
+  &__search {
+    position: absolute;
+    left: 15px;
+    top: 30%;
+    width: 22px;
+
+    filter: invert(38%) sepia(6%) saturate(1141%) hue-rotate(194deg) brightness(98%) contrast(85%);
+  }
+
+  &__input {
+    width: 100%;
+    padding: 15px;
+    padding-left: 45px;
+
+    background-color: transparent;
+    border: 1px solid $modalColor;
+    outline: none;
+
+    font-size: 16px;
+    line-height: 19px;
+    color: $lightGray;
+
+    &::placeholder {
+      color: $modalColor;
+    }
+
+    &:focus {
+      border: 1px solid $lightGray;
+    }
+  }
+
+  &__button {
+    padding: 0 16px;
+    border: none;
+    background-color: $modalButtonColor;
+
+    color: $lightGray;
+
+    cursor: pointer;
+
+    &:hover {
+      opacity: 0.85;
+    }
+
+    &:active {
+      opacity: 0.7;
+    }
+  }
+
+  &__city {
+    box-sizing: border-box;
+    display: flex;
+    align-self: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: 12px 22px;
+    margin-bottom: 15px;
+
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 19px;
+
+    border: 1px solid transparent;
+
+    cursor: pointer;
+
+    &:nth-last-child(1) {
+      margin-bottom: 0;
+    }
+
+    &:hover {
+      border: 1px solid $modalColor;
+    }
+
+    &:hover .modal-window__chevron {
+      filter: invert(38%) sepia(6%) saturate(1141%) hue-rotate(194deg) brightness(98%) contrast(85%);
+    }
+  }
+
+  &__chevron {
+    filter: invert(9%) sepia(7%) saturate(7423%) hue-rotate(201deg) brightness(96%) contrast(88%);
+  }
+}
+
 .right-side {
   flex-grow: 1;
   height: 100vh;
