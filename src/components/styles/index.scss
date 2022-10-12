@@ -17,27 +17,45 @@ code {
 .page {
   display: flex;
   font-size: 26px;
-
+  flex-direction: column;
   color: $lightGray;
+
+  @include onTab {
+    flex-direction: row;
+  }
 }
 
 .wrapper {
   box-sizing: border-box;
-  padding: 40px 46px;
+  padding: 40px 20px;
+
+  @include onSmallDesktop {
+    padding: 40px 46px;
+  }
 
   &--right-side {
-    padding: 42px 125px 0;
+    padding: 21px 24px 20px;
+
+    @include onSmallDesktop {
+      padding: 21px 50px 20px;
+    }
+
+    @include onBigDesktop {
+      padding: 42px 100px 0;
+    }
   }
 }
 
 .left-side {
   overflow: hidden;
   position: relative;
-  max-width: 450px;
   width: 100%;
   height: 100vh;
-
   background-color: $mediumBlue;
+
+  @include onTab {
+    width: 35vw;
+  }
 
   &__bc {
     position: absolute;
@@ -54,6 +72,11 @@ code {
     flex-direction: column;
     justify-content: space-between;
     align-items: center;
+
+    &--spinner {
+      justify-content: center;
+      align-items: center;
+    }
   }
 
   &__top {
@@ -63,12 +86,12 @@ code {
   }
 
   &__rectangular-button {
-    padding: 10px 18px;
+    padding: 10px 10px;
 
     font-family: 'Raleway', sans-serif;
     font-weight: 500;
-    font-size: 16px;
-    line-height: 19px;
+    font-size: 12px;
+    // line-height: 19px;
     color: $lightGray;
 
     border: none;
@@ -77,13 +100,18 @@ code {
 
     cursor: pointer;
 
+    @include onSmallDesktop {
+      font-size: 16px;
+    }
+
     &:hover {
       opacity: 0.85;
     }
   }
 
   &__round-button {
-    padding: 0 8px;
+    width: 40px;
+    height: 40px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -171,12 +199,16 @@ code {
   top: 0;
   left: 0;
   bottom: 0;
-  max-width: 450px;
+  // max-width: 450px;
   width: 100%;
   background-color: $mediumBlue;
 
   transform: translateX(-100%);
   transition: transform 0.5s;
+
+  @include onTab {
+    width: 35vw;
+  }
 
   &--open {
     transform: translateX(0%);
@@ -203,6 +235,17 @@ code {
     display: flex;
     column-gap: 12px;
     margin-bottom: 38px;
+
+    &--wrong {
+      &::after {
+        position: absolute;
+        bottom: -20px;
+        left: 10px;
+        content: 'wrong name of city';
+        font-size: 12px;
+        color: $wrongInput;
+      }
+    }
   }
 
   &__search {
@@ -215,6 +258,7 @@ code {
   }
 
   &__input {
+    position: relative;
     width: 100%;
     padding: 15px;
     padding-left: 45px;
@@ -233,6 +277,11 @@ code {
 
     &:focus {
       border: 1px solid $lightGray;
+    }
+
+    &--wrong {
+      position: relative;
+      border: 1px solid $wrongInput;
     }
   }
 
@@ -290,16 +339,23 @@ code {
 }
 
 .right-side {
-  flex-grow: 1;
-  height: 100vh;
   background-color: $darkBlue;
+
+  @include onTab {
+    height: 100vh;
+    width: 70vw;
+  }
 
   &__top {
     display: flex;
     justify-content: flex-end;
     column-gap: 12px;
 
-    margin-bottom: 60px;
+    margin-bottom: 30px;
+
+    @include onDesktop {
+      margin-bottom: 60px;
+    }
   }
 
   &__button {
@@ -329,14 +385,23 @@ code {
     grid-column-gap: 26px;
     grid-row-gap: 12px;
 
-    margin-bottom: 72px;
+    margin-bottom: 45px;
+
+    @include onDesktop {
+      margin-bottom: 72px;
+    }
   }
 
   &__bottom {
     &__title {
       margin: 0;
-      margin-bottom: 32px;
-      font-size: 1.5rem;
+      margin-bottom: 22px;
+      font-size: 20px;
+
+      @include onSmallDesktop {
+        font-size: 24px;
+        margin-bottom: 32px;
+      }
     }
   }
 }
@@ -346,6 +411,7 @@ code {
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: space-between;
   box-sizing: border-box;
   padding: 18px 22px;
 
@@ -354,7 +420,7 @@ code {
   color: $lightGray;
 
   &__img {
-    width: 100%;
+    max-width: 100px;
     margin-bottom: 30px;
   }
 
@@ -375,18 +441,31 @@ code {
 
 .hightlight {
   display: grid;
-  grid-template-columns: repeat(2, minmax(250px, 1fr));
-  grid-column-gap: 48px;
-  grid-row-gap: 48px;
+  grid-template-columns: repeat(1, minmax(250px, 1fr));
+  grid-column-gap: 24px;
+  grid-row-gap: 24px;
+
+  @include onBigPhone {
+    grid-template-columns: repeat(2, minmax(200px, 1fr));
+  }
+
+  @include onDesktop {
+    grid-column-gap: 48px;
+    grid-row-gap: 48px;
+  }
 
   &__container {
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 22px 50px;
+    padding: 12px 25px;
 
     background-color: $mediumBlue;
+
+    @include onDesktop {
+      padding: 22px 50px;
+    }
   }
 
   &__title {
@@ -399,8 +478,12 @@ code {
     margin-bottom: 18px;
 
     font-weight: 700;
-    font-size: 4rem;
+    font-size: 46px;
     line-height: 75px;
+
+    @include onDesktop {
+      font-size: 64px;
+    }
 
     &--humidity {
       margin-bottom: 12px;
@@ -408,8 +491,12 @@ code {
   }
 
   &__submain {
-    font-size: 2.2rem;
+    font-size: 28px;
     line-height: 42px;
+
+    @include onDesktop {
+      font-size: 36px;
+    }
   }
 
   &__navigation {
@@ -432,8 +519,12 @@ code {
 
     border-radius: 50%;
 
-    transform: rotate(-150deg);
+    // transform: rotate(-150deg);
     filter: invert(100%) sepia(84%) saturate(412%) hue-rotate(180deg) brightness(101%) contrast(84%);
+
+    &--transform {
+      transform: rotate(-150deg);
+    }
   }
 
   &__subtitle {
